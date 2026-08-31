@@ -1,0 +1,80 @@
+---
+title: CLI
+description: Command reference for the Ridge binary — install, add, run, why, gc, migrate, and global flags.
+sidebarTitle: CLI
+order: 1
+---
+
+The binary is `ridge`. Global flags can appear before or after the subcommand.
+
+## Global flags
+
+| Flag | Default | Purpose |
+| --- | --- | --- |
+| `--dir <path>` | `.` | Repository root |
+| `--offline` | `false` | Never hit the network |
+| `--frozen` | `CI=true` | Fail if the lockfile would change |
+| `--json` | `false` | Machine-readable output |
+| `--color` | `auto` | `auto`, `always`, `never` |
+
+## `ridge install`
+
+Reproduce the graph in `ridge.lock`.
+
+```bash
+ridge install
+ridge install --frozen
+ridge install --filter web --filter ui
+```
+
+## `ridge add`
+
+Add a dependency to the current workspace (or `--filter`).
+
+```bash
+ridge add ms@2
+ridge add -D typescript
+ridge add @acme/ui --workspace
+```
+
+`--workspace` links a local workspace by name instead of fetching from the registry.
+
+## `ridge run` / `ridge exec`
+
+```bash
+ridge run test
+ridge run build --recursive
+ridge exec tsc -- --noEmit
+```
+
+## `ridge why`
+
+Print the shortest dependency path.
+
+```bash
+ridge why react
+ridge why react --json
+```
+
+## `ridge gc`
+
+Delete store entries that no lockfile in `--dir` references.
+
+```bash
+ridge gc
+ridge gc --dry-run
+```
+
+## `ridge migrate`
+
+See [Migrate from npm](/en/docs/v2/guides/migrate-from-npm).
+
+```bash
+ridge migrate --from npm
+ridge migrate --from yarn
+ridge migrate --from pnpm
+```
+
+## `ridge --version`
+
+Prints the CLI version. Docs for v1 live under [v1 CLI](/en/docs/v1/reference/cli).

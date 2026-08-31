@@ -1,0 +1,36 @@
+{
+  "url": "http://127.0.0.1:8080/",
+  "viewports": {
+    "desktop": {
+      "width": 1280,
+      "height": 800,
+      "status": 200,
+      "title": "Ridge · The package manager that stays out of your way.",
+      "hasCanvas": false,
+      "bodyTextLen": 829,
+      "bodyTextHash": "fa70ef5301874a2c9f6cbd36f8f1bcfae27417921881e9a932978de75d93803e",
+      "bodyTextPrefix": "Ridge Search ⌘K Docs PACKAGE MANAGER Install once. Resolve forev",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/app-builder-preview.png"
+    },
+    "mobile": {
+      "width": 390,
+      "height": 844,
+      "status": 200,
+      "title": "Ridge · The package manager that stays out of your way.",
+      "hasCanvas": false,
+      "bodyTextLen": 819,
+      "bodyTextHash": "c95c06065466f5e53a5afc1e27747cd41594923a9500a79adf118a570bfbb71a",
+      "bodyTextPrefix": "Ridge Docs PACKAGE MANAGER Install once. Resolve forever. Ridge ",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/app-builder-preview-mobile.png"
+    }
+  },
+  "brandWarnings": [],
+  "authWarnings": [],
+  "verdictFile": "/workspace/screenshots/app-builder-preview.json"
+}

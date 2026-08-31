@@ -1,0 +1,45 @@
+---
+title: Migrate from npm
+description: Convert an npm or Yarn project to Ridge without changing application code. Import the existing lockfile, then freeze it.
+sidebarTitle: Migrate from npm
+order: 2
+---
+
+Ridge reads `package-lock.json` and `yarn.lock` as import sources. It does not keep them around after the first successful `ridge install`.
+
+## Import
+
+```bash title="terminal" terminal
+$ cd existing-app
+$ ridge migrate --from npm
+imported 412 packages from package-lock.json
+wrote ridge.lock
+$ ridge install --frozen
+```
+
+`ridge migrate` never deletes `node_modules`. Remove it yourself after you are satisfied:
+
+```bash
+rm -rf node_modules
+ridge install
+```
+
+## What changes
+
+```diff title="package.json" diff
+ {
+   "name": "existing-app",
+-  "packageManager": "npm@10.9.0"
++  "packageManager": "ridge@2.4.1"
+ }
+```
+
+Scripts stay the same. Replace `npm ci` in CI with `ridge install --frozen`. See [CI](/en/docs/v2/guides/ci).
+
+## Peer dependency differences
+
+npm is lenient with peers. Ridge is not. The migrate command prints every peer that npm would have warned about and Ridge will error on. Fix them in `package.json` before `--frozen` will pass.
+
+<Callout type="tip" title="Coming from pnpm">
+pnpm lockfiles (`lockfileVersion: 9`) import cleanly. Isolated `node_modules` is already close to Ridge's default. You will mostly notice the store path and the YAML lockfile.
+</Callout>

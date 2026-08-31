@@ -1,0 +1,48 @@
+---
+title: نصب
+description: نصب CLI Ridge با npm، pnpm، Yarn یا Bun و تأیید باینری.
+sidebarTitle: نصب
+order: 2
+---
+
+CLI با نام `@ridge/cli` منتشر می‌شود. آن را سراسری نصب کنید و با `ridge --version` نسخهٔ `2.x` را ببینید.
+
+## پیش‌نیاز
+
+- Node.js ۲۰.۱۱ یا جدیدتر
+- پوشهٔ کش قابل نوشتن (`~/.cache/ridge`)
+
+<Callout type="warning" title="Node ۱۸ پشتیبانی نمی‌شود">
+نسخهٔ ۲ از APIهای Node ۲۰ استفاده می‌کند. اگر روی Node ۱۸ مانده‌اید، روی v1 بمانید.
+</Callout>
+
+## نصب CLI
+
+<Tabs items={["npm", "pnpm", "Yarn"]}>
+  <Tab title="npm">
+
+```bash title="terminal"
+npm install -g @ridge/cli
+ridge --version
+```
+
+  </Tab>
+  <Tab title="pnpm">
+
+```bash title="terminal"
+pnpm add -g @ridge/cli
+ridge --version
+```
+
+  </Tab>
+  <Tab title="Yarn">
+
+```bash title="terminal"
+yarn global add @ridge/cli
+ridge --version
+```
+
+  </Tab>
+</Tabs>
+
+بعد از نصب، [معرفی](/fa/docs/v2/getting-started) را بخوانید یا به [فضاهای کاری](/fa/docs/v2/concepts/workspaces) بروید.

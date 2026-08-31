@@ -1,0 +1,36 @@
+{
+  "url": "http://127.0.0.1:8080/en/docs/v2/getting-started",
+  "viewports": {
+    "desktop": {
+      "width": 1280,
+      "height": 800,
+      "status": 200,
+      "title": "Introduction · Ridge",
+      "hasCanvas": false,
+      "bodyTextLen": 2672,
+      "bodyTextHash": "f1bc3279b3aca4c8abdab0dc6fafe06fc85ab2336fb97deed22717bae7f18762",
+      "bodyTextPrefix": "Skip to content Ridge v2.4 Search docs… ⌘K English Docs GETTING ",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/docs-intro.png"
+    },
+    "mobile": {
+      "width": 390,
+      "height": 844,
+      "status": 200,
+      "title": "Introduction · Ridge",
+      "hasCanvas": false,
+      "bodyTextLen": 2366,
+      "bodyTextHash": "9540c8aabbf10f5812f84b009dffd00df94f219f79a46c0107e770b8f69aeb7a",
+      "bodyTextPrefix": "Skip to content Ridge v2.4 English GETTING STARTED Open in Intro",
+      "horizontalOverflow": true,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/docs-intro-mobile.png"
+    }
+  },
+  "brandWarnings": [],
+  "authWarnings": [],
+  "verdictFile": "/workspace/screenshots/docs-intro.json"
+}

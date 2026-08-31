@@ -1,0 +1,24 @@
+---
+title: Introduction (v1)
+description: Ridge 1.x documentation. v1 uses a JSON lockfile and a flatter store. New projects should start on v2.
+sidebarTitle: Introduction
+order: 1
+---
+
+You are reading **Ridge v1**. It is in maintenance mode. Bug fixes land here; features land in [v2](/en/docs/v2/getting-started).
+
+<Callout type="warning" title="Lockfile versions do not mix">
+A v1 `ridge.lock` (`lockfileVersion: 1`) cannot be installed with the v2 CLI unless you run `ridge migrate`. Keep the CLI on 1.9.x for this branch.
+</Callout>
+
+## What is different in v1
+
+- The lockfile is JSON, not YAML
+- `hoist` defaults to `worktree`
+- Nested workspaces are not discovered unless listed explicitly
+- `ridge gc` is opt-in in CI
+
+## Start here
+
+1. [Install v1](/en/docs/v1/getting-started/installation)
+2. [CLI](/en/docs/v1/reference/cli)

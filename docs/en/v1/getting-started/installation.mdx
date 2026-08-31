@@ -1,0 +1,19 @@
+---
+title: Install v1
+description: Install the Ridge 1.9 CLI. Use this only for repositories that still ship a v1 lockfile.
+sidebarTitle: Installation
+order: 2
+---
+
+Pin the CLI to the 1.x line.
+
+```bash title="terminal"
+npm install -g @ridge/cli@1.9.4
+ridge --version
+```
+
+Node 18 is supported on v1. Node 16 is not.
+
+<Callout type="tip">
+When you are ready to move, follow the v2 [migration guide](/en/docs/v2/guides/migrate-from-npm) after running `ridge migrate` with the v2 CLI.
+</Callout>

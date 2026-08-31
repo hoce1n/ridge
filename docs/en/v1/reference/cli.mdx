@@ -1,0 +1,19 @@
+---
+title: CLI (v1)
+description: Command reference for Ridge 1.9. Subcommands match v2, with fewer filters and a JSON lockfile.
+sidebarTitle: CLI
+order: 1
+---
+
+v1 supports `install`, `add`, `run`, `exec`, and `why`. It does not support `--recursive` filters of the form `--filter './packages/*'`.
+
+```bash
+ridge install
+ridge add ms@2
+ridge run test
+ridge why ms
+```
+
+`--frozen` exists. `--offline` exists. `ridge gc` exists but is not implied by CI.
+
+The current CLI is documented in [v2 CLI](/en/docs/v2/reference/cli).

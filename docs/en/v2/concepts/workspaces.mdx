@@ -1,0 +1,51 @@
+---
+title: Workspaces
+description: How Ridge discovers nested workspaces, isolates node_modules, and shares the content-addressed store across a monorepo.
+sidebarTitle: Workspaces
+order: 1
+---
+
+A **workspace** is a directory with a `package.json` that Ridge manages as part of one install. Workspaces can nest. A nested workspace is not hoisted into its parent.
+
+## Declaring workspaces
+
+```toml title="ridge.toml" showLineNumbers
+[workspace]
+packages = ["apps/*", "packages/*", "packages/experimental/*"]
+```
+
+Globs are matched from the repository root. Nested matches are valid: `packages/experimental/foo` is a workspace of its own, not a folder inside `packages/*`.
+
+<Callout type="info">
+Ridge does not read the `workspaces` field from `package.json`. Put the globs in `ridge.toml` so the layout is explicit.
+</Callout>
+
+## Isolation rules
+
+1. Each workspace gets its own `node_modules`.
+2. A dependency is linked from the store, never copied from a sibling.
+3. `hoist = "none"` (the default) means a package can only require what it declared.
+4. `hoist = "worktree"` allows a workspace to see dependencies of its descendants, never of its siblings.
+
+Phantom dependencies fail at runtime instead of resolving to whatever happened to be hoisted last week.
+
+## Nested example
+
+```text title="repository layout"
+apps/web
+packages/ui
+packages/experimental/shader
+```
+
+`apps/web` can depend on `packages/ui`. It cannot accidentally import `shader` unless it lists it. `shader` can depend on `ui` without being flattened into `packages/`.
+
+## Commands that respect workspaces
+
+| Command | Scope |
+| --- | --- |
+| `ridge install` | Whole worktree |
+| `ridge add lodash --filter web` | One workspace |
+| `ridge run build --recursive` | Every workspace that defines `build` |
+| `ridge why react` | Graph from the root |
+
+See the [CLI reference](/en/docs/v2/reference/cli) for `--filter` syntax.

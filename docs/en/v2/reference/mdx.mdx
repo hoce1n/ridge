@@ -1,0 +1,81 @@
+---
+title: MDX components
+description: Callouts, tabs, accordions, images, tables, and fenced code features available in Ridge documentation pages.
+sidebarTitle: MDX components
+order: 3
+---
+
+Authoring uses MDX. The components below are registered globally — you do not import them.
+
+## Callouts
+
+<Callout type="info">
+Informational asides. Use for context that should not live in the main paragraph.
+</Callout>
+
+<Callout type="tip" title="A named tip">
+Prefer a `title` when the default label is too generic.
+</Callout>
+
+<Callout type="warning">
+Breaking changes, version gates, and “do not cache this path” notes.
+</Callout>
+
+<Callout type="danger">
+Integrity failures, trust-boundary mistakes, destructive commands.
+</Callout>
+
+## Tabs
+
+<Tabs items={["ridge.toml", "env"]}>
+  <Tab title="ridge.toml">
+
+```toml
+[store]
+path = "~/.cache/ridge/store"
+```
+
+  </Tab>
+  <Tab title="env">
+
+```bash
+export RIDGE_STORE=~/.cache/ridge/store
+```
+
+  </Tab>
+</Tabs>
+
+## Accordion
+
+<Accordion>
+  <AccordionItem title="When should I use an accordion?">
+    For answers that most readers will skip. Keep the question in the title; keep the body short.
+  </AccordionItem>
+  <AccordionItem title="Can accordions nest?">
+    They should not. Flatten the outline instead.
+  </AccordionItem>
+</Accordion>
+
+## Code fences
+
+Fences accept `title`, `{line}` highlights, `showLineNumbers`, `terminal`, and `diff`.
+
+```ts title="src/index.ts" {3} showLineNumbers
+import { ms } from "ms";
+
+export const wait = (n: number) => ms(`${n}s`);
+```
+
+## Images
+
+Images open a zoom dialog on click.
+
+![Ridge content store](/images/content-store.svg)
+
+## Tables and GFM
+
+Task lists and strikethroughs work:
+
+- [x] Frontmatter with `title` and `description`
+- [x] Heading anchors
+- [ ] A handwritten Markdown parser — ~~out of scope~~

@@ -1,0 +1,51 @@
+---
+title: The lockfile
+description: ridge.lock is a contract. It records the exact graph, integrity hashes, and peer resolutions Ridge will reproduce.
+sidebarTitle: The lockfile
+order: 3
+---
+
+`ridge.lock` is YAML. Ridge never writes JSON for the lockfile: diffs stay reviewable, and trailing commas are not a style debate.
+
+## Anatomy
+
+```yaml title="ridge.lock" showLineNumbers {1,4-6}
+lockfileVersion: 2
+root: .
+packages:
+  "ms@2.1.3":
+    hash: sha512-9c0aa2e44b1c2d3e4f506070809a1b2c3d4e5f6071809a0b1c2d3e4f5a6b7c8d9e0f1a2b3c4d5e6f708192a3b
+    url: https://registry.npmjs.org/ms/-/ms-2.1.3.tgz
+    peers: []
+```
+
+`lockfileVersion` is `2` for Ridge 2.x. v1 lockfiles use `1` and a flatter `packages` map. `ridge install` will not auto-migrate a v1 lockfile; run `ridge migrate` instead. See [Migrate from npm](/en/docs/v2/guides/migrate-from-npm).
+
+## When it changes
+
+Ridge rewrites the lockfile when:
+
+- you add, remove, or update a dependency
+- a peer dependency resolution changes
+- you pass `--latest` or a range that resolves to a new version
+
+It does **not** rewrite the lockfile because a registry published a new version of something you did not ask for.
+
+## Strict mode
+
+With `install.strict = true` (the default in v2):
+
+- a missing lockfile is an error in CI (`CI=true`)
+- a lockfile that does not match `package.json` is an error
+- a hash mismatch is an error
+
+Locally, `ridge install` will update the lockfile and print a diff. In CI it will not. Details in the [CI guide](/en/docs/v2/guides/ci).
+
+<Accordion>
+  <AccordionItem title="What if two workspaces need different versions?">
+    Ridge duplicates the package in the store under two hashes only if the bytes differ. Same bytes, one store entry, two links. Different bytes, two store entries. The lockfile lists both.
+  </AccordionItem>
+  <AccordionItem title="Can I edit the lockfile by hand?">
+    You can, but you should not. Change `package.json` and run `ridge install`. Hand-edits are valid YAML until the next install rewrites them.
+  </AccordionItem>
+</Accordion>

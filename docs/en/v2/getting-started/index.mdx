@@ -1,0 +1,50 @@
+---
+title: Introduction
+description: Ridge is a content-addressable package manager for JavaScript. This page explains what it is, why it exists, and how to read these docs.
+sidebarTitle: Introduction
+order: 1
+---
+
+Ridge installs JavaScript packages from a **content-addressed store**. Every tarball is hashed, written once, and linked into projects. The lockfile is the source of truth: if the graph cannot be reproduced, the install fails.
+
+<Callout type="info" title="Who this is for">
+If you maintain a monorepo, care about CI determinism, or have been bitten by phantom dependencies, start here. If you just need a command, skip to [Installation](/en/docs/v2/getting-started/installation).
+</Callout>
+
+## What Ridge does
+
+- Resolves a dependency graph from `package.json` and `ridge.lock`
+- Fetches packages into a global store keyed by integrity hash
+- Links those packages into each project with a strict `node_modules` layout
+- Refuses to proceed when the lockfile and the registry disagree
+
+It does **not** patch `require` at runtime, rewrite your source, or invent a new package format. The output of `ridge install` is a normal Node project.
+
+## Why another package manager
+
+npm, Yarn, and pnpm all work. Ridge exists for three constraints those tools treat as optional:
+
+1. **Bytes are identity.** Two packages with the same integrity hash are the same package. The store never keeps a second copy.
+2. **The lockfile is a contract.** A dirty lockfile is a failed install, not a warning.
+3. **Workspaces nest.** A package inside a package is still a workspace. Hoisting never crosses a workspace boundary unless you say so.
+
+Read [Content addressing](/en/docs/v2/concepts/content-addressing) and [Workspaces](/en/docs/v2/concepts/workspaces) when you want the model, not the commands.
+
+## How these docs are organized
+
+| Section | Use it for |
+| --- | --- |
+| Getting Started | Install Ridge and run the first project |
+| Concepts | The store, the lockfile, and workspace rules |
+| Guides | CI, migrations, and day-to-day recipes |
+| Reference | CLI flags and `ridge.toml` |
+
+Every page has an **On this page** outline, an **Open in** menu (copy Markdown, copy link, ChatGPT, GitHub), and previous/next links that follow the sidebar order.
+
+## Versions and languages
+
+These docs cover **v2** (current) and **v1** (legacy). Switch versions in the header. Persian (`فارسی`) is available for the v2 getting-started and concepts pages; the layout flips to RTL automatically.
+
+<Callout type="tip" title="Stay on the latest">
+New projects should use v2. The v1 pages exist so production lockfiles from 1.x can still be read without mixing instructions.
+</Callout>

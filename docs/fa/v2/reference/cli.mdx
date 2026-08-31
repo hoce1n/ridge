@@ -1,0 +1,29 @@
+---
+title: CLI
+description: مرجع فرمان‌های باینری Ridge — install، add، run، why و پرچم‌های سراسری.
+sidebarTitle: CLI
+order: 1
+---
+
+باینری `ridge` است. پرچم‌های سراسری می‌توانند قبل یا بعد از زیرفرمان بیایند.
+
+## پرچم‌های سراسری
+
+| پرچم | پیش‌فرض | کاربرد |
+| --- | --- | --- |
+| `--dir <path>` | `.` | ریشهٔ مخزن |
+| `--offline` | `false` | بدون شبکه |
+| `--frozen` | `CI=true` | شکست اگر فایل قفل عوض شود |
+| `--json` | `false` | خروجی ماشین‌خوان |
+
+## فرمان‌ها
+
+```bash
+ridge install --frozen
+ridge add ms@2
+ridge run test --recursive
+ridge why react
+ridge gc --dry-run
+```
+
+`--filter` یک یا چند فضای کاری را محدود می‌کند. جزئیات مدل در [فضاهای کاری](/fa/docs/v2/concepts/workspaces) است.

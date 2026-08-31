@@ -1,0 +1,52 @@
+---
+title: Configuration
+description: Every key in ridge.toml — store path, install policy, registry mirrors, and workspace globs.
+sidebarTitle: Configuration
+order: 2
+---
+
+Ridge reads `ridge.toml` from the repository root. Environment variables override file values. There is no user-level config file on purpose: two checkouts of the same repo must install the same graph.
+
+## Schema
+
+```toml title="ridge.toml" showLineNumbers
+[store]
+path = "~/.cache/ridge/store"
+
+[install]
+strict = true
+hoist = "none"          # "none" | "worktree"
+preferFrozen = true
+
+[registry]
+url = "https://registry.npmjs.org"
+timeoutMs = 30000
+
+[workspace]
+packages = ["apps/*", "packages/*"]
+```
+
+## Environment overrides
+
+| Variable | Overrides |
+| --- | --- |
+| `RIDGE_STORE` | `store.path` |
+| `RIDGE_REGISTRY` | `registry.url` |
+| `RIDGE_FROZEN` | `install.preferFrozen` |
+| `CI` | treated as frozen when `true` |
+
+## Hoist modes
+
+- `none` — a module can require only what it declared. Recommended.
+- `worktree` — a workspace may see dependencies of packages it contains. Useful for legacy bundlers that crawl `node_modules` from the repo root.
+
+There is no `full` hoist. If you need npm's layout, stay on npm.
+
+<Callout type="warning">
+Changing `hoist` rewrites the on-disk layout. Commit the lockfile and reinstall on every machine after the change.
+</Callout>
+
+## Related
+
+- [Workspaces](/en/docs/v2/concepts/workspaces)
+- [CLI](/en/docs/v2/reference/cli)

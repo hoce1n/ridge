@@ -1,0 +1,71 @@
+---
+title: Quick start
+description: Create a project, add a dependency, and inspect the lockfile Ridge writes on the first install.
+sidebarTitle: Quick start
+order: 3
+---
+
+This walkthrough creates a tiny workspace, adds `ms`, and shows the files Ridge writes.
+
+## Create a project
+
+```bash title="terminal" terminal
+$ mkdir hello-ridge && cd hello-ridge
+$ ridge init
+wrote package.json
+wrote ridge.toml
+```
+
+`ridge init` is non-interactive. It writes a `package.json` with `"private": true` and a default [ridge.toml](/en/docs/v2/reference/configuration).
+
+## Add a dependency
+
+```bash title="terminal" {2} showLineNumbers
+ridge add ms@2
+ridge install
+```
+
+The second command is implied by `ridge add`, but running it twice is safe: the store is content-addressed, so a repeat install is a no-op when the lockfile already matches.
+
+## What got written
+
+```toml title="ridge.toml" showLineNumbers {3-5}
+[store]
+path = "~/.cache/ridge/store"
+
+[install]
+strict = true
+hoist = "none"
+```
+
+```diff title="package.json" diff
+ {
+   "name": "hello-ridge",
+   "private": true,
++  "dependencies": {
++    "ms": "2.1.3"
++  }
+ }
+```
+
+The lockfile records the resolved version and the integrity hash. See [The lockfile](/en/docs/v2/concepts/lockfile) for the full schema.
+
+<Callout type="tip">
+Run `ridge why ms` when a version surprises you. It prints the shortest path from the workspace root to that package.
+</Callout>
+
+## Run a script
+
+```json title="package.json"
+{
+  "scripts": {
+    "start": "node index.js"
+  }
+}
+```
+
+```bash
+ridge run start
+```
+
+`ridge run` uses the same PATH as `ridge exec`: binaries from the current workspace, then the store, then the process environment.

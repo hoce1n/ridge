@@ -1,0 +1,70 @@
+---
+title: Installation
+description: Install the Ridge CLI with npm, pnpm, Yarn, or Bun, then verify the binary and enable corepack-style shims.
+sidebarTitle: Installation
+order: 2
+---
+
+The CLI is published as `@ridge/cli`. Pick a package manager, install it globally (or as a project dev dependency), and confirm `ridge --version` prints `2.x`.
+
+## Prerequisites
+
+- Node.js 20.11 or newer
+- A writable cache directory (`~/.cache/ridge` on Linux, `~/Library/Caches/ridge` on macOS)
+
+<Callout type="warning" title="Node 18 is not supported">
+Ridge v2 uses `fetch` and `glob` from Node 20. If you are pinned to Node 18, stay on [v1](/en/docs/v1/getting-started/installation).
+</Callout>
+
+## Install the CLI
+
+<Tabs items={["npm", "pnpm", "Yarn", "Bun"]}>
+  <Tab title="npm">
+
+```bash title="terminal" {1} showLineNumbers
+npm install -g @ridge/cli
+ridge --version
+```
+
+  </Tab>
+  <Tab title="pnpm">
+
+```bash title="terminal"
+pnpm add -g @ridge/cli
+ridge --version
+```
+
+  </Tab>
+  <Tab title="Yarn">
+
+```bash title="terminal"
+yarn global add @ridge/cli
+ridge --version
+```
+
+  </Tab>
+  <Tab title="Bun">
+
+```bash title="terminal"
+bun add -g @ridge/cli
+ridge --version
+```
+
+  </Tab>
+</Tabs>
+
+Project-local installs work too. Add `@ridge/cli` to `devDependencies` and invoke it with `npx ridge` or a `package.json` script.
+
+## Enable shims
+
+Ridge can install shims so `ridge` is on your `PATH` even when the package is local:
+
+```bash title="terminal" terminal
+$ ridge setup
+ok  wrote ~/.local/bin/ridge
+ok  store  ~/.cache/ridge/store
+```
+
+## Next
+
+Continue to [Quick start](/en/docs/v2/getting-started/quick-start) to create a lockfile, or jump to [Configuration](/en/docs/v2/reference/configuration) if you already have a repo.

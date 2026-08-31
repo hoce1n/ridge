@@ -1,0 +1,42 @@
+---
+title: Content addressing
+description: Packages in Ridge are stored by cryptographic hash. Identical bytes are written once and verified on every install.
+sidebarTitle: Content addressing
+order: 2
+---
+
+Ridge treats a package as a bag of bytes. The address of those bytes is a SHA-512 hash. The store path is derived from the hash, not from the package name or version.
+
+Click the diagram to zoom.
+
+![Content-addressed store: registry tarball hashed into the store, then linked into two projects](/images/content-store.svg)
+
+## Why hash, not name@version
+
+Names are not identity. `left-pad@1.3.0` on Monday is not a guarantee about Tuesday. The integrity field in the lockfile is. If the tarball Ridge downloads does not match the hash, the install stops.
+
+This is the same idea as git objects and Nix store paths, applied to `node_modules`.
+
+## The store layout
+
+```text title="~/.cache/ridge/store"
+sha512/8f/3c2a1e0b…/package
+sha512/91/c0aa2e44…/package
+```
+
+The first two hex characters are a fanout directory so a store with hundreds of thousands of packages does not dump every entry in one folder.
+
+Hard links (or reflinks on copy-on-write filesystems) connect the store to each project. Deleting `node_modules` does not delete the store. `ridge gc` removes unreferenced hashes.
+
+## Verification
+
+Every `ridge install` re-hashes the files it links unless you pass `--offline` **and** the lockfile already matches. There is no “trust the cache” mode that skips integrity.
+
+<Callout type="danger" title="Do not share a store across trust boundaries">
+A store is a cache of verified bytes, not a sandbox. Do not point two machines with different security postures at the same NFS store.
+</Callout>
+
+## See also
+
+- [The lockfile](/en/docs/v2/concepts/lockfile)
+- [CI](/en/docs/v2/guides/ci)

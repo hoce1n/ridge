@@ -1,0 +1,53 @@
+---
+title: Continuous integration
+description: Run deterministic Ridge installs in GitHub Actions, GitLab CI, and elsewhere. Cache the store, fail on lockfile drift.
+sidebarTitle: CI
+order: 1
+---
+
+CI should never mutate `ridge.lock`. Set `CI=true` (most providers already do) and Ridge will install from the lockfile or exit non-zero.
+
+## GitHub Actions
+
+```yaml title=".github/workflows/ci.yml" showLineNumbers {12-18}
+name: ci
+on: [push, pull_request]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install Ridge
+        run: npm install -g @ridge/cli
+      - name: Cache store
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ridge/store
+          key: ridge-${{ hashFiles('ridge.lock') }}
+      - run: ridge install --frozen
+      - run: ridge run test --recursive
+```
+
+`--frozen` is redundant when `CI=true`, and explicit when it is not.
+
+## Caching rules
+
+Cache **the store**, not `node_modules`. `node_modules` is a set of links. The store is the bytes. A cache key of `hashFiles('ridge.lock')` means a lockfile change cold-starts the store and nothing else.
+
+<Callout type="warning">
+Do not cache `~/.cache/ridge` wholesale if you also store logs there. Cache `~/.cache/ridge/store` only.
+</Callout>
+
+## Exit codes
+
+| Code | Meaning |
+| --- | --- |
+| 0 | Graph reproduced |
+| 2 | Lockfile missing or stale |
+| 3 | Integrity mismatch |
+| 4 | Network disabled (`--offline`) and store incomplete |
+
+A job that sees exit `2` should fail the pull request, not commit a new lockfile from CI.
