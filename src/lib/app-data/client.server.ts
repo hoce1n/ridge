@@ -211,8 +211,8 @@ function tokenIdentityKey(token: string): string {
             .digest("base64url");
         }
       }
-    } catch {
-      // Malformed JWT payloads intentionally use the full-token fallback below.
+    } catch(_err) {
+      // ignore invalid JWT payload and fall back to token hash
     }
   }
   return createHash("sha256").update(token).digest("base64url");
