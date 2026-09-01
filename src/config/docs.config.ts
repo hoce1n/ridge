@@ -36,9 +36,9 @@ export const docsConfig: DocsConfig = {
   tagline: "The package manager that stays out of your way.",
   description:
     "Ridge is a content-addressable package manager for JavaScript. Deterministic installs, nested workspaces, and a store that never duplicates a byte.",
-  siteUrl: "https://ridge.dev",
+  siteUrl: "https://ridge.hoce1n.ir",
   github: {
-    repo: "ridge-hq/ridge",
+    repo: "hoce1n/ridge",
     branch: "main",
     docsPath: "docs",
   },

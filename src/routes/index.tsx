@@ -7,6 +7,7 @@ import {
   Lock,
   Search,
 } from "lucide-react";
+
 import { docsConfig, githubRepoUrl } from "@/config/docs.config";
 import { t } from "@/config/i18n";
 import { Logo } from "@/components/layout/Logo";
