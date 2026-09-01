@@ -16,6 +16,7 @@ import { Route as LangIndexRouteImport } from './routes/$lang/index'
 import { Route as DocsIndexRouteImport } from './routes/docs/index'
 import { Route as LangDocsIndexRouteImport } from './routes/$lang/docs/index'
 import { Route as LangDocsVersionRouteRouteImport } from './routes/$lang/docs/$version/route'
+import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 import { Route as LangDocsVersionIndexRouteImport } from './routes/$lang/docs/$version/index'
 import { Route as LangDocsVersionSplatRouteImport } from './routes/$lang/docs/$version/$'
 
@@ -54,6 +55,11 @@ const LangDocsVersionRouteRoute = LangDocsVersionRouteRouteImport.update({
   path: '/$lang/docs/$version',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
+  id: '/api/auth/$',
+  path: '/api/auth/$',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LangDocsVersionIndexRoute = LangDocsVersionIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -72,6 +78,7 @@ export interface FileRoutesByFullPath {
   '/$lang/': typeof LangIndexRoute
   '/docs/': typeof DocsIndexRoute
   '/$lang/docs/$version': typeof LangDocsVersionRouteRouteWithChildren
+  '/api/auth/$': typeof ApiAuthSplatRoute
   '/$lang/docs/': typeof LangDocsIndexRoute
   '/$lang/docs/$version/$': typeof LangDocsVersionSplatRoute
   '/$lang/docs/$version/': typeof LangDocsVersionIndexRoute
@@ -82,6 +89,7 @@ export interface FileRoutesByTo {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/$lang': typeof LangIndexRoute
   '/docs': typeof DocsIndexRoute
+  '/api/auth/$': typeof ApiAuthSplatRoute
   '/$lang/docs': typeof LangDocsIndexRoute
   '/$lang/docs/$version/$': typeof LangDocsVersionSplatRoute
   '/$lang/docs/$version': typeof LangDocsVersionIndexRoute
@@ -94,6 +102,7 @@ export interface FileRoutesById {
   '/$lang/': typeof LangIndexRoute
   '/docs/': typeof DocsIndexRoute
   '/$lang/docs/$version': typeof LangDocsVersionRouteRouteWithChildren
+  '/api/auth/$': typeof ApiAuthSplatRoute
   '/$lang/docs/': typeof LangDocsIndexRoute
   '/$lang/docs/$version/$': typeof LangDocsVersionSplatRoute
   '/$lang/docs/$version/': typeof LangDocsVersionIndexRoute
@@ -107,6 +116,7 @@ export interface FileRouteTypes {
     | '/$lang/'
     | '/docs/'
     | '/$lang/docs/$version'
+    | '/api/auth/$'
     | '/$lang/docs/'
     | '/$lang/docs/$version/$'
     | '/$lang/docs/$version/'
@@ -117,6 +127,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/$lang'
     | '/docs'
+    | '/api/auth/$'
     | '/$lang/docs'
     | '/$lang/docs/$version/$'
     | '/$lang/docs/$version'
@@ -128,6 +139,7 @@ export interface FileRouteTypes {
     | '/$lang/'
     | '/docs/'
     | '/$lang/docs/$version'
+    | '/api/auth/$'
     | '/$lang/docs/'
     | '/$lang/docs/$version/$'
     | '/$lang/docs/$version/'
@@ -140,6 +152,7 @@ export interface RootRouteChildren {
   LangIndexRoute: typeof LangIndexRoute
   DocsIndexRoute: typeof DocsIndexRoute
   LangDocsVersionRouteRoute: typeof LangDocsVersionRouteRouteWithChildren
+  ApiAuthSplatRoute: typeof ApiAuthSplatRoute
   LangDocsIndexRoute: typeof LangDocsIndexRoute
 }
 
@@ -194,6 +207,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LangDocsVersionRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/auth/$': {
+      id: '/api/auth/$'
+      path: '/api/auth/$'
+      fullPath: '/api/auth/$'
+      preLoaderRoute: typeof ApiAuthSplatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/$lang/docs/$version/': {
       id: '/$lang/docs/$version/'
       path: '/'
@@ -231,6 +251,7 @@ const rootRouteChildren: RootRouteChildren = {
   LangIndexRoute: LangIndexRoute,
   DocsIndexRoute: DocsIndexRoute,
   LangDocsVersionRouteRoute: LangDocsVersionRouteRouteWithChildren,
+  ApiAuthSplatRoute: ApiAuthSplatRoute,
   LangDocsIndexRoute: LangDocsIndexRoute,
 }
 export const routeTree = rootRouteImport

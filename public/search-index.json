@@ -1,0 +1,255 @@
+[
+  {
+    "href": "/en/docs/v1/getting-started",
+    "title": "Introduction (v1)",
+    "description": "Ridge 1.x documentation. v1 uses a JSON lockfile and a flatter store. New projects should start on v2.",
+    "section": "getting-started",
+    "snippet": "You are reading Ridge v1 . It is in maintenance mode. Bug fixes land here; features land in v2. A v1 ridge.lock ( lockfileVersion: 1 ) cannot be installed with the v2 CLI unless you run ridge migrate . Keep the CLI on 1.9.x for this branch. What is different in v1 - The lockfile ",
+    "headings": [
+      "What is different in v1",
+      "Start here"
+    ],
+    "lang": "en",
+    "version": "v1"
+  },
+  {
+    "href": "/en/docs/v1/getting-started/installation",
+    "title": "Install v1",
+    "description": "Install the Ridge 1.9 CLI. Use this only for repositories that still ship a v1 lockfile.",
+    "section": "getting-started",
+    "snippet": "Pin the CLI to the 1.x line. Node 18 is supported on v1. Node 16 is not. When you are ready to move, follow the v2 migration guide after running ridge migrate with the v2 CLI.",
+    "headings": [],
+    "lang": "en",
+    "version": "v1"
+  },
+  {
+    "href": "/en/docs/v1/reference/cli",
+    "title": "CLI (v1)",
+    "description": "Command reference for Ridge 1.9. Subcommands match v2, with fewer filters and a JSON lockfile.",
+    "section": "reference",
+    "snippet": "v1 supports install , add , run , exec , and why . It does not support --recursive filters of the form --filter './packages/ ' . --frozen exists. --offline exists. ridge gc exists but is not implied by CI. The current CLI is documented in v2 CLI.",
+    "headings": [],
+    "lang": "en",
+    "version": "v1"
+  },
+  {
+    "href": "/en/docs/v2/concepts/content-addressing",
+    "title": "Content addressing",
+    "description": "Packages in Ridge are stored by cryptographic hash. Identical bytes are written once and verified on every install.",
+    "section": "concepts",
+    "snippet": "Ridge treats a package as a bag of bytes. The address of those bytes is a SHA-512 hash. The store path is derived from the hash, not from the package name or version. Click the diagram to zoom. Why hash, not name@version Names are not identity. left-pad@1.3.0 on Monday is not a g",
+    "headings": [
+      "Why hash, not name@version",
+      "The store layout",
+      "Verification",
+      "See also"
+    ],
+    "lang": "en",
+    "version": "v2"
+  },
+  {
+    "href": "/en/docs/v2/concepts/lockfile",
+    "title": "The lockfile",
+    "description": "ridge.lock is a contract. It records the exact graph, integrity hashes, and peer resolutions Ridge will reproduce.",
+    "section": "concepts",
+    "snippet": "ridge.lock is YAML. Ridge never writes JSON for the lockfile: diffs stay reviewable, and trailing commas are not a style debate. Anatomy lockfileVersion is 2 for Ridge 2.x. v1 lockfiles use 1 and a flatter packages map. ridge install will not auto-migrate a v1 lockfile; run ridge",
+    "headings": [
+      "Anatomy",
+      "When it changes",
+      "Strict mode"
+    ],
+    "lang": "en",
+    "version": "v2"
+  },
+  {
+    "href": "/en/docs/v2/concepts/workspaces",
+    "title": "Workspaces",
+    "description": "How Ridge discovers nested workspaces, isolates node_modules, and shares the content-addressed store across a monorepo.",
+    "section": "concepts",
+    "snippet": "A workspace is a directory with a package.json that Ridge manages as part of one install. Workspaces can nest. A nested workspace is not hoisted into its parent. Declaring workspaces Globs are matched from the repository root. Nested matches are valid: packages/experimental/foo i",
+    "headings": [
+      "Declaring workspaces",
+      "Isolation rules",
+      "Nested example",
+      "Commands that respect workspaces"
+    ],
+    "lang": "en",
+    "version": "v2"
+  },
+  {
+    "href": "/en/docs/v2/getting-started",
+    "title": "Introduction",
+    "description": "Ridge is a content-addressable package manager for JavaScript. This page explains what it is, why it exists, and how to read these docs.",
+    "section": "getting-started",
+    "snippet": "Ridge installs JavaScript packages from a content-addressed store . Every tarball is hashed, written once, and linked into projects. The lockfile is the source of truth: if the graph cannot be reproduced, the install fails. If you maintain a monorepo, care about CI determinism, o",
+    "headings": [
+      "What Ridge does",
+      "Why another package manager",
+      "How these docs are organized",
+      "Versions and languages"
+    ],
+    "lang": "en",
+    "version": "v2"
+  },
+  {
+    "href": "/en/docs/v2/getting-started/installation",
+    "title": "Installation",
+    "description": "Install the Ridge CLI with npm, pnpm, Yarn, or Bun, then verify the binary and enable corepack-style shims.",
+    "section": "getting-started",
+    "snippet": "The CLI is published as @ridge/cli . Pick a package manager, install it globally (or as a project dev dependency), and confirm ridge --version prints 2.x . Prerequisites - Node.js 20.11 or newer - A writable cache directory ( /.cache/ridge on Linux, /Library/Caches/ridge on macOS",
+    "headings": [
+      "Prerequisites",
+      "Install the CLI",
+      "Enable shims",
+      "Next"
+    ],
+    "lang": "en",
+    "version": "v2"
+  },
+  {
+    "href": "/en/docs/v2/getting-started/quick-start",
+    "title": "Quick start",
+    "description": "Create a project, add a dependency, and inspect the lockfile Ridge writes on the first install.",
+    "section": "getting-started",
+    "snippet": "This walkthrough creates a tiny workspace, adds ms , and shows the files Ridge writes. Create a project ridge init is non-interactive. It writes a package.json with \"private\": true and a default ridge.toml. Add a dependency The second command is implied by ridge add , but running",
+    "headings": [
+      "Create a project",
+      "Add a dependency",
+      "What got written",
+      "Run a script"
+    ],
+    "lang": "en",
+    "version": "v2"
+  },
+  {
+    "href": "/en/docs/v2/guides/ci",
+    "title": "Continuous integration",
+    "description": "Run deterministic Ridge installs in GitHub Actions, GitLab CI, and elsewhere. Cache the store, fail on lockfile drift.",
+    "section": "guides",
+    "snippet": "CI should never mutate ridge.lock . Set CI=true (most providers already do) and Ridge will install from the lockfile or exit non-zero. GitHub Actions --frozen is redundant when CI=true , and explicit when it is not. Caching rules Cache the store , not node modules . node modules ",
+    "headings": [
+      "GitHub Actions",
+      "Caching rules",
+      "Exit codes"
+    ],
+    "lang": "en",
+    "version": "v2"
+  },
+  {
+    "href": "/en/docs/v2/guides/migrate-from-npm",
+    "title": "Migrate from npm",
+    "description": "Convert an npm or Yarn project to Ridge without changing application code. Import the existing lockfile, then freeze it.",
+    "section": "guides",
+    "snippet": "Ridge reads package-lock.json and yarn.lock as import sources. It does not keep them around after the first successful ridge install . Import ridge migrate never deletes node modules . Remove it yourself after you are satisfied: What changes Scripts stay the same. Replace npm ci ",
+    "headings": [
+      "Import",
+      "What changes",
+      "Peer dependency differences"
+    ],
+    "lang": "en",
+    "version": "v2"
+  },
+  {
+    "href": "/en/docs/v2/reference/cli",
+    "title": "CLI",
+    "description": "Command reference for the Ridge binary — install, add, run, why, gc, migrate, and global flags.",
+    "section": "reference",
+    "snippet": "The binary is ridge . Global flags can appear before or after the subcommand. Global flags | Flag | Default | Purpose | | --- | --- | --- | | --dir | . | Repository root | | --offline | false | Never hit the network | | --frozen | CI=true | Fail if the lockfile would change | | -",
+    "headings": [
+      "Global flags",
+      "ridge install",
+      "ridge add",
+      "ridge run / ridge exec",
+      "ridge why",
+      "ridge gc",
+      "ridge migrate",
+      "ridge --version"
+    ],
+    "lang": "en",
+    "version": "v2"
+  },
+  {
+    "href": "/en/docs/v2/reference/configuration",
+    "title": "Configuration",
+    "description": "Every key in ridge.toml — store path, install policy, registry mirrors, and workspace globs.",
+    "section": "reference",
+    "snippet": "Ridge reads ridge.toml from the repository root. Environment variables override file values. There is no user-level config file on purpose: two checkouts of the same repo must install the same graph. Schema Environment overrides | Variable | Overrides | | --- | --- | | RIDGE STOR",
+    "headings": [
+      "Schema",
+      "Environment overrides",
+      "Hoist modes",
+      "Related"
+    ],
+    "lang": "en",
+    "version": "v2"
+  },
+  {
+    "href": "/en/docs/v2/reference/mdx",
+    "title": "MDX components",
+    "description": "Callouts, tabs, accordions, images, tables, and fenced code features available in Ridge documentation pages.",
+    "section": "reference",
+    "snippet": "Authoring uses MDX. The components below are registered globally — you do not import them. Callouts Informational asides. Use for context that should not live in the main paragraph. Prefer a title when the default label is too generic. Breaking changes, version gates, and “do not",
+    "headings": [
+      "Callouts",
+      "Tabs",
+      "Accordion",
+      "Code fences",
+      "Images",
+      "Tables and GFM"
+    ],
+    "lang": "en",
+    "version": "v2"
+  },
+  {
+    "href": "/fa/docs/v2/concepts/workspaces",
+    "title": "فضاهای کاری",
+    "description": "Ridge چگونه فضاهای کاری تو در تو را پیدا می‌کند، node_modules را جدا نگه می‌دارد و مخزن را بین بسته‌ها به اشتراک می‌گذارد.",
+    "section": "concepts",
+    "snippet": "یک فضای کاری پوشه‌ای با package.json است که Ridge آن را در یک نصب واحد مدیریت می‌کند. فضاهای کاری می‌توانند تو در تو باشند. فضای کاری داخلی به والد hoist نمی‌شود. اعلام فضاهای کاری الگوها از ریشهٔ مخزن مطابقت داده می‌شوند. مطابقت تو در تو معتبر است. Ridge فیلد workspaces در packa",
+    "headings": [
+      "اعلام فضاهای کاری",
+      "قواعد جداسازی"
+    ],
+    "lang": "fa",
+    "version": "v2"
+  },
+  {
+    "href": "/fa/docs/v2/getting-started",
+    "title": "معرفی",
+    "description": "Ridge یک مدیر بسته با آدرس‌دهی محتوایی برای جاوااسکریپت است. این صفحه می‌گوید Ridge چیست و این اسناد را چطور بخوانید.",
+    "section": "getting-started",
+    "snippet": "Ridge بسته‌های جاوااسکریپت را از یک مخزن آدرس‌دهی‌شده با محتوا نصب می‌کند. هر tarball هش می‌شود، یک‌بار نوشته می‌شود و به پروژه‌ها پیوند می‌خورد. فایل قفل منبع حقیقت است: اگر گراف قابل بازتولید نباشد، نصب شکست می‌خورد. اگر مونوریپو نگه می‌دارید، به قطعیت CI اهمیت می‌دهید، یا از و",
+    "headings": [
+      "Ridge چه می‌کند",
+      "نسخه‌ها و زبان‌ها"
+    ],
+    "lang": "fa",
+    "version": "v2"
+  },
+  {
+    "href": "/fa/docs/v2/getting-started/installation",
+    "title": "نصب",
+    "description": "نصب CLI Ridge با npm، pnpm، Yarn یا Bun و تأیید باینری.",
+    "section": "getting-started",
+    "snippet": "CLI با نام @ridge/cli منتشر می‌شود. آن را سراسری نصب کنید و با ridge --version نسخهٔ 2.x را ببینید. پیش‌نیاز - Node.js ۲۰.۱۱ یا جدیدتر - پوشهٔ کش قابل نوشتن ( /.cache/ridge ) نسخهٔ ۲ از APIهای Node ۲۰ استفاده می‌کند. اگر روی Node ۱۸ مانده‌اید، روی v1 بمانید. نصب CLI بعد از نصب، م",
+    "headings": [
+      "پیش‌نیاز",
+      "نصب CLI"
+    ],
+    "lang": "fa",
+    "version": "v2"
+  },
+  {
+    "href": "/fa/docs/v2/reference/cli",
+    "title": "CLI",
+    "description": "مرجع فرمان‌های باینری Ridge — install، add، run، why و پرچم‌های سراسری.",
+    "section": "reference",
+    "snippet": "باینری ridge است. پرچم‌های سراسری می‌توانند قبل یا بعد از زیرفرمان بیایند. پرچم‌های سراسری | پرچم | پیش‌فرض | کاربرد | | --- | --- | --- | | --dir | . | ریشهٔ مخزن | | --offline | false | بدون شبکه | | --frozen | CI=true | شکست اگر فایل قفل عوض شود | | --json | false | خروجی ماشی",
+    "headings": [
+      "پرچم‌های سراسری",
+      "فرمان‌ها"
+    ],
+    "lang": "fa",
+    "version": "v2"
+  }
+]
