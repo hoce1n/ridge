@@ -52,6 +52,12 @@ function Home() {
               </kbd>
             </button>
             <Link
+              to="/app"
+              className="h-9 px-3 text-sm text-muted hover:text-foreground inline-flex items-center"
+            >
+              Trajectory
+            </Link>
+            <Link
               to={startHref as never}
               className="h-9 px-3 text-sm text-muted hover:text-foreground inline-flex items-center"
             >

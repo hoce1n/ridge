@@ -10,9 +10,11 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AppRouteRouteImport } from './routes/app/route'
 import { Route as SearchIndexDotjsonRouteImport } from './routes/search-index[.]json'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as LangIndexRouteImport } from './routes/$lang/index'
+import { Route as AppIndexRouteImport } from './routes/app/index'
 import { Route as DocsIndexRouteImport } from './routes/docs/index'
 import { Route as LangDocsIndexRouteImport } from './routes/$lang/docs/index'
 import { Route as LangDocsVersionRouteRouteImport } from './routes/$lang/docs/$version/route'
@@ -23,6 +25,11 @@ import { Route as LangDocsVersionSplatRouteImport } from './routes/$lang/docs/$v
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AppRouteRoute = AppRouteRouteImport.update({
+  id: '/app',
+  path: '/app',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SearchIndexDotjsonRoute = SearchIndexDotjsonRouteImport.update({
@@ -39,6 +46,11 @@ const LangIndexRoute = LangIndexRouteImport.update({
   id: '/$lang/',
   path: '/$lang/',
   getParentRoute: () => rootRouteImport,
+} as any)
+const AppIndexRoute = AppIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AppRouteRoute,
 } as any)
 const DocsIndexRoute = DocsIndexRouteImport.update({
   id: '/docs/',
@@ -73,9 +85,11 @@ const LangDocsVersionSplatRoute = LangDocsVersionSplatRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/app': typeof AppRouteRouteWithChildren
   '/search-index.json': typeof SearchIndexDotjsonRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/$lang/': typeof LangIndexRoute
+  '/app/': typeof AppIndexRoute
   '/docs/': typeof DocsIndexRoute
   '/$lang/docs/$version': typeof LangDocsVersionRouteRouteWithChildren
   '/api/auth/$': typeof ApiAuthSplatRoute
@@ -88,6 +102,7 @@ export interface FileRoutesByTo {
   '/search-index.json': typeof SearchIndexDotjsonRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/$lang': typeof LangIndexRoute
+  '/app': typeof AppIndexRoute
   '/docs': typeof DocsIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/$lang/docs': typeof LangDocsIndexRoute
@@ -97,9 +112,11 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/app': typeof AppRouteRouteWithChildren
   '/search-index.json': typeof SearchIndexDotjsonRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/$lang/': typeof LangIndexRoute
+  '/app/': typeof AppIndexRoute
   '/docs/': typeof DocsIndexRoute
   '/$lang/docs/$version': typeof LangDocsVersionRouteRouteWithChildren
   '/api/auth/$': typeof ApiAuthSplatRoute
@@ -111,9 +128,11 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/app'
     | '/search-index.json'
     | '/sitemap.xml'
     | '/$lang/'
+    | '/app/'
     | '/docs/'
     | '/$lang/docs/$version'
     | '/api/auth/$'
@@ -126,6 +145,7 @@ export interface FileRouteTypes {
     | '/search-index.json'
     | '/sitemap.xml'
     | '/$lang'
+    | '/app'
     | '/docs'
     | '/api/auth/$'
     | '/$lang/docs'
@@ -134,9 +154,11 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/app'
     | '/search-index.json'
     | '/sitemap.xml'
     | '/$lang/'
+    | '/app/'
     | '/docs/'
     | '/$lang/docs/$version'
     | '/api/auth/$'
@@ -147,6 +169,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AppRouteRoute: typeof AppRouteRouteWithChildren
   SearchIndexDotjsonRoute: typeof SearchIndexDotjsonRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   LangIndexRoute: typeof LangIndexRoute
@@ -163,6 +186,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/app': {
+      id: '/app'
+      path: '/app'
+      fullPath: '/app'
+      preLoaderRoute: typeof AppRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/search-index.json': {
@@ -185,6 +215,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/$lang/'
       preLoaderRoute: typeof LangIndexRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/app/': {
+      id: '/app/'
+      path: '/'
+      fullPath: '/app/'
+      preLoaderRoute: typeof AppIndexRouteImport
+      parentRoute: typeof AppRouteRoute
     }
     '/docs/': {
       id: '/docs/'
@@ -231,6 +268,18 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface AppRouteRouteChildren {
+  AppIndexRoute: typeof AppIndexRoute
+}
+
+const AppRouteRouteChildren: AppRouteRouteChildren = {
+  AppIndexRoute: AppIndexRoute,
+}
+
+const AppRouteRouteWithChildren = AppRouteRoute._addFileChildren(
+  AppRouteRouteChildren,
+)
+
 interface LangDocsVersionRouteRouteChildren {
   LangDocsVersionSplatRoute: typeof LangDocsVersionSplatRoute
   LangDocsVersionIndexRoute: typeof LangDocsVersionIndexRoute
@@ -246,6 +295,7 @@ const LangDocsVersionRouteRouteWithChildren =
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AppRouteRoute: AppRouteRouteWithChildren,
   SearchIndexDotjsonRoute: SearchIndexDotjsonRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   LangIndexRoute: LangIndexRoute,
