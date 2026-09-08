@@ -14,7 +14,11 @@ export class Vault {
   }
 
   // Internal helper for writing files, making it easy and clean to mock in tests
-  async writeTextFile(filePath: string, contents: string, options: { encoding: string; flag: string }): Promise<void> {
+  async writeTextFile(
+    filePath: string,
+    contents: string,
+    options: { encoding: BufferEncoding; flag: string },
+  ): Promise<void> {
     await writeFile(filePath, contents, options);
   }
 
