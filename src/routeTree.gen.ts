@@ -15,10 +15,13 @@ import { Route as SearchIndexDotjsonRouteImport } from './routes/search-index[.]
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as LangIndexRouteImport } from './routes/$lang/index'
 import { Route as AppIndexRouteImport } from './routes/app/index'
+import { Route as AppTimelineRouteImport } from './routes/app/timeline'
 import { Route as DocsIndexRouteImport } from './routes/docs/index'
 import { Route as LangDocsIndexRouteImport } from './routes/$lang/docs/index'
 import { Route as LangDocsVersionRouteRouteImport } from './routes/$lang/docs/$version/route'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
+import { Route as AppEventsIdRouteImport } from './routes/app/events.$id'
+import { Route as AppEvidenceNameRouteImport } from './routes/app/evidence.$name'
 import { Route as LangDocsVersionIndexRouteImport } from './routes/$lang/docs/$version/index'
 import { Route as LangDocsVersionSplatRouteImport } from './routes/$lang/docs/$version/$'
 
@@ -52,6 +55,11 @@ const AppIndexRoute = AppIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AppRouteRoute,
 } as any)
+const AppTimelineRoute = AppTimelineRouteImport.update({
+  id: '/timeline',
+  path: '/timeline',
+  getParentRoute: () => AppRouteRoute,
+} as any)
 const DocsIndexRoute = DocsIndexRouteImport.update({
   id: '/docs/',
   path: '/docs/',
@@ -72,6 +80,16 @@ const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
   path: '/api/auth/$',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AppEventsIdRoute = AppEventsIdRouteImport.update({
+  id: '/events/$id',
+  path: '/events/$id',
+  getParentRoute: () => AppRouteRoute,
+} as any)
+const AppEvidenceNameRoute = AppEvidenceNameRouteImport.update({
+  id: '/evidence/$name',
+  path: '/evidence/$name',
+  getParentRoute: () => AppRouteRoute,
+} as any)
 const LangDocsVersionIndexRoute = LangDocsVersionIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -88,11 +106,14 @@ export interface FileRoutesByFullPath {
   '/app': typeof AppRouteRouteWithChildren
   '/search-index.json': typeof SearchIndexDotjsonRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/app/timeline': typeof AppTimelineRoute
   '/$lang/': typeof LangIndexRoute
   '/app/': typeof AppIndexRoute
   '/docs/': typeof DocsIndexRoute
   '/$lang/docs/$version': typeof LangDocsVersionRouteRouteWithChildren
   '/api/auth/$': typeof ApiAuthSplatRoute
+  '/app/events/$id': typeof AppEventsIdRoute
+  '/app/evidence/$name': typeof AppEvidenceNameRoute
   '/$lang/docs/': typeof LangDocsIndexRoute
   '/$lang/docs/$version/$': typeof LangDocsVersionSplatRoute
   '/$lang/docs/$version/': typeof LangDocsVersionIndexRoute
@@ -101,10 +122,13 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/search-index.json': typeof SearchIndexDotjsonRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/app/timeline': typeof AppTimelineRoute
   '/$lang': typeof LangIndexRoute
   '/app': typeof AppIndexRoute
   '/docs': typeof DocsIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
+  '/app/events/$id': typeof AppEventsIdRoute
+  '/app/evidence/$name': typeof AppEvidenceNameRoute
   '/$lang/docs': typeof LangDocsIndexRoute
   '/$lang/docs/$version/$': typeof LangDocsVersionSplatRoute
   '/$lang/docs/$version': typeof LangDocsVersionIndexRoute
@@ -115,11 +139,14 @@ export interface FileRoutesById {
   '/app': typeof AppRouteRouteWithChildren
   '/search-index.json': typeof SearchIndexDotjsonRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/app/timeline': typeof AppTimelineRoute
   '/$lang/': typeof LangIndexRoute
   '/app/': typeof AppIndexRoute
   '/docs/': typeof DocsIndexRoute
   '/$lang/docs/$version': typeof LangDocsVersionRouteRouteWithChildren
   '/api/auth/$': typeof ApiAuthSplatRoute
+  '/app/events/$id': typeof AppEventsIdRoute
+  '/app/evidence/$name': typeof AppEvidenceNameRoute
   '/$lang/docs/': typeof LangDocsIndexRoute
   '/$lang/docs/$version/$': typeof LangDocsVersionSplatRoute
   '/$lang/docs/$version/': typeof LangDocsVersionIndexRoute
@@ -131,11 +158,14 @@ export interface FileRouteTypes {
     | '/app'
     | '/search-index.json'
     | '/sitemap.xml'
+    | '/app/timeline'
     | '/$lang/'
     | '/app/'
     | '/docs/'
     | '/$lang/docs/$version'
     | '/api/auth/$'
+    | '/app/events/$id'
+    | '/app/evidence/$name'
     | '/$lang/docs/'
     | '/$lang/docs/$version/$'
     | '/$lang/docs/$version/'
@@ -144,10 +174,13 @@ export interface FileRouteTypes {
     | '/'
     | '/search-index.json'
     | '/sitemap.xml'
+    | '/app/timeline'
     | '/$lang'
     | '/app'
     | '/docs'
     | '/api/auth/$'
+    | '/app/events/$id'
+    | '/app/evidence/$name'
     | '/$lang/docs'
     | '/$lang/docs/$version/$'
     | '/$lang/docs/$version'
@@ -157,11 +190,14 @@ export interface FileRouteTypes {
     | '/app'
     | '/search-index.json'
     | '/sitemap.xml'
+    | '/app/timeline'
     | '/$lang/'
     | '/app/'
     | '/docs/'
     | '/$lang/docs/$version'
     | '/api/auth/$'
+    | '/app/events/$id'
+    | '/app/evidence/$name'
     | '/$lang/docs/'
     | '/$lang/docs/$version/$'
     | '/$lang/docs/$version/'
@@ -223,6 +259,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppIndexRouteImport
       parentRoute: typeof AppRouteRoute
     }
+    '/app/timeline': {
+      id: '/app/timeline'
+      path: '/timeline'
+      fullPath: '/app/timeline'
+      preLoaderRoute: typeof AppTimelineRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
     '/docs/': {
       id: '/docs/'
       path: '/docs'
@@ -251,6 +294,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiAuthSplatRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/app/events/$id': {
+      id: '/app/events/$id'
+      path: '/events/$id'
+      fullPath: '/app/events/$id'
+      preLoaderRoute: typeof AppEventsIdRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
+    '/app/evidence/$name': {
+      id: '/app/evidence/$name'
+      path: '/evidence/$name'
+      fullPath: '/app/evidence/$name'
+      preLoaderRoute: typeof AppEvidenceNameRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
     '/$lang/docs/$version/': {
       id: '/$lang/docs/$version/'
       path: '/'
@@ -269,11 +326,17 @@ declare module '@tanstack/react-router' {
 }
 
 interface AppRouteRouteChildren {
+  AppTimelineRoute: typeof AppTimelineRoute
   AppIndexRoute: typeof AppIndexRoute
+  AppEventsIdRoute: typeof AppEventsIdRoute
+  AppEvidenceNameRoute: typeof AppEvidenceNameRoute
 }
 
 const AppRouteRouteChildren: AppRouteRouteChildren = {
+  AppTimelineRoute: AppTimelineRoute,
   AppIndexRoute: AppIndexRoute,
+  AppEventsIdRoute: AppEventsIdRoute,
+  AppEvidenceNameRoute: AppEvidenceNameRoute,
 }
 
 const AppRouteRouteWithChildren = AppRouteRoute._addFileChildren(
