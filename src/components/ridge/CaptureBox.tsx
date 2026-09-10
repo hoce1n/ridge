@@ -10,6 +10,7 @@ import {
 import { KINDS, type Kind } from "@/lib/ridge/kinds";
 import type { Proposal } from "@/lib/ridge/types";
 import { postCapture, postConfirm } from "@/lib/ridge/server";
+import { localUtcOffset } from "@/lib/ridge/time";
 
 type CaptureBoxProps = {
   open: boolean;
@@ -57,7 +58,11 @@ export function CaptureBox({ open, onOpenChange, onCaptured }: CaptureBoxProps) 
     setError(null);
     try {
       const result = await postCapture({
-        data: { body: text, kinds: kinds.length ? kinds : undefined },
+        data: {
+          body: text,
+          kinds: kinds.length ? kinds : undefined,
+          offset: localUtcOffset(),
+        },
       });
       onCaptured();
       setPendingId(result.event.id);
