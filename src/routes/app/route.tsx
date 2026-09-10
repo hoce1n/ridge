@@ -44,6 +44,9 @@ function AppShell() {
             <Link to="/app" className="text-foreground">
               Trajectory
             </Link>
+            <Link to="/app/timeline" className="text-muted hover:text-foreground">
+              Timeline
+            </Link>
           </nav>
           <div className="ms-auto flex items-center gap-1">
             <Button size="sm" variant="outline" onClick={() => setCaptureOpen(true)}>

@@ -115,8 +115,8 @@ export function TrajectoryView({ data, onChanged }: TrajectoryViewProps) {
               {data.knowledge.map((item) => (
                 <li key={item.name}>
                   <Link
-                    to={"/app/evidence/$name" as never}
-                    params={{ name: item.name } as never}
+                    to="/app/evidence/$name"
+                    params={{ name: item.name }}
                     className="text-sm text-foreground hover:text-accent"
                   >
                     {item.name}
@@ -136,8 +136,8 @@ export function TrajectoryView({ data, onChanged }: TrajectoryViewProps) {
               {data.projects.map((item) => (
                 <li key={item.name}>
                   <Link
-                    to={"/app/evidence/$name" as never}
-                    params={{ name: item.name } as never}
+                    to="/app/evidence/$name"
+                    params={{ name: item.name }}
                     className="text-sm text-foreground hover:text-accent"
                   >
                     {item.name}
