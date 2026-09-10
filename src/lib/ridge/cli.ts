@@ -1,5 +1,6 @@
 import { createCore, type Core } from "./core.ts";
 import { isKind, type Kind } from "./kinds.ts";
+import { localUtcOffset } from "./time.ts";
 
 export type CliIo = {
   log: (s: string) => void;
@@ -12,6 +13,7 @@ type Flags = {
   keep?: string;
   projects?: string;
   save?: string;
+  offset?: string;
   rest: string[];
 };
 
@@ -33,6 +35,8 @@ function parseArgs(argv: string[]): { command: string; flags: Flags } {
       flags.projects = argv[++i] ?? "";
     } else if (arg === "--save") {
       flags.save = argv[++i] ?? "";
+    } else if (arg === "--offset") {
+      flags.offset = argv[++i] ?? "";
     } else if (arg.startsWith("--")) {
       flags.rest.push(arg);
     } else {
@@ -58,7 +62,7 @@ function vaultRoot(flags: Flags, env: NodeJS.ProcessEnv): string | undefined {
 
 function usage(): string {
   return [
-    "ridge add <body> [--kinds k1,k2] [--vault path]",
+    "ridge add <body> [--kinds k1,k2] [--offset +HH:MM] [--vault path]",
     "ridge interpret <id> --keep a,b [--projects p] [--vault path]",
     "ridge trajectory [--vault path]",
     "ridge timeline [--vault path]",
@@ -104,6 +108,7 @@ export async function runCli(
       const { event, proposals } = await core.capture({
         body,
         kinds: kinds.length ? kinds : undefined,
+        offset: flags.offset || localUtcOffset(),
       });
       io.log(event.id);
       io.log(event.path);

@@ -44,12 +44,14 @@ export const postCapture = createServerFn({ method: "POST" })
     z.object({
       body: z.string().min(1),
       kinds: z.array(kindSchema).optional(),
+      offset: z.string().optional(),
     }),
   )
   .handler(async ({ data }) => {
     return (await core()).capture({
       body: data.body,
       kinds: data.kinds,
+      offset: data.offset,
     });
   });
 
